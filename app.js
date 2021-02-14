@@ -9,10 +9,17 @@ app.use(express.urlencoded());
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  req.sendfile("nåt");
+});
+
 // Access the parse results as request.body
-app.post('/', function(req, res){
+app.post('/', (req, res) => {
+    let [month, date, year] = new Date().toLocaleDateString("en-US").split("/")
+    console.log(req.body.uploadedfile)
     console.log(req.body.name);
     console.log(req.body.description);
+    console.log(month,":",date,":", year);
 });
 
 app.listen(3030, () => {
