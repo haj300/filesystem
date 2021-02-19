@@ -7,11 +7,11 @@
 </head>
 <body>
 
-  <form class="upload-file" action="/upload" method="post">
+  <form class="upload-file" action="/upload" method="post" enctype="multipart/form-data">
 
     <div>
       <label>Upload File</label>
-      <input type="file" name="ufile" enctype="multipart/form-data">
+      <input type="file" name="ufile">
     </div>
     <div class="file-info">
       <label>Name</label>
@@ -28,6 +28,9 @@
 
   <script>
     console.log("this is inline javascript");
+  </script>
+  <script type="text/javascript" src="./app.js">
+
   </script>
 </body>
 
