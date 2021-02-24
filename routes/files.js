@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const multer = require('multer');
+let fileModel = require('../models/file');
+
+var addedFiles = [];
+var aFile = 'this file';
+
 // upload file path
 const FILE_PATH = 'uploads';
 
@@ -8,17 +13,17 @@ const FILE_PATH = 'uploads';
 const upload = multer({
   dest: `${FILE_PATH}/`,
   fileFilter: (req, file, cb) => {
-        // allow images only
+        // allow jpeg, pdf and xml only
         if (!file.originalname.match(/\.(jpg|jpeg|pdf|xml)$/)) {
             return cb(new Error('Only jpg, pdf or xml are allowed.'), false);
         }
-        // console.log(file);
         cb(null, true);
     }
 });
 
 router.get('/all', (req, res) => {
-  res.send('alla');
+  let description = req.body.description;
+  res.render('file', {fileName: aFile, description: description});
 });
 
 router.post('/upload', upload.single('ufile'), async (req,res) => {
@@ -35,16 +40,21 @@ router.post('/upload', upload.single('ufile'), async (req,res) => {
       res.send({
         status: true,
         message: 'File is uploaded',
-        data: {
-          name: file.origlinalname,
-          mimetype: file.mimetype,
-          size: file.size
-        }
       });
+      const fileName = file.origlinalname;
+      const type = file.mimetype;
+      const owner = req.body.name;
+      const description = req.body.description;
+      const today = new Date();
+      const date = today.toLocaleDateString('en-US');
+      let fileToAdd = new fileModel(file, type, fileName, owner, description, date);
+      addedFiles.push(fileToAdd);
+      console.log(addedFiles);
     }
   } catch (err) {
     res.status(500).send(err);
   }
+
 });
 
-module.exports = router;
+module.exports = router, addedFiles;
