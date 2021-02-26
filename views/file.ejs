@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-<h1> <%= fileName %></h1>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>All files</title>
+</head>
+<body>
+  <h1> Filesystem</h1>
 
-<table>
-  <tr>
-    <th>File</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td> <%= fileName %></td>
-    <td> <%= description %> </td>
-  </tr>
-</table>
+  <table>
+    <tr>
+      <th>File</th>
+      <th>Owner</th>
+      <th>Description</th>
+    </tr>
+      <% array.forEach(function (entry) { %>
+        <tr>
+        <td>
+          <%= entry._file.originalname %>
+        </td>
+        <td>
+          <%= entry._owner %>
+        </td>
+        <td>
+          <%= entry._description %>
+        </td>
+        <% }) %>
+      </tr>
+
+    </table>
 
   </body>
-</html>
+  </html>

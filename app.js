@@ -1,8 +1,16 @@
 const express = require("express");
+const multer = require('multer');
+const path = require('path');
+
 const app = express();
 
-app.use(express.static('public'));
+const indexRoute = require('./routes/index');
+const fileRoute = require('./routes/files');
 
+// configure express to use public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// configure template engine
 app.set('view engine', 'ejs');
 
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -12,8 +20,8 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 // import routes
-const route = require('./routes/files');
-app.use('/', route);
+app.use('/', indexRoute);
+app.use('/files', fileRoute);
 
 app.listen(3030, () => {
   console.log("server on 3030");
