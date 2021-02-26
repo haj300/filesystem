@@ -14,17 +14,22 @@
       <th>File</th>
       <th>Owner</th>
       <th>Description</th>
+      <th>Date</th>
     </tr>
-      <% array.forEach(function (entry) { %>
-        <tr>
+    <% array.forEach(function (entry) { %>
+      <tr>
         <td>
-          <%= entry._file.originalname %>
+          <a href="<%= entry._pathToFile %>">
+            <%= entry._file.originalname %> </a>
         </td>
         <td>
           <%= entry._owner %>
         </td>
         <td>
           <%= entry._description %>
+        </td>
+        <td>
+          <%= entry._date %>
         </td>
         <% }) %>
       </tr>

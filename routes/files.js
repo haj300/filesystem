@@ -29,8 +29,8 @@ router.get('/all', (req, res) => {
 
 // show newly uploaded file
 router.get('/uploads/:id', (req, res) => {
-  let fileId = req.params.id;
-  let pathToFile = path.join(__dirname, '..', 'uploads', fileId);
+  const fileId = req.params.id;
+  const pathToFile = path.join(__dirname, '..', 'uploads', fileId);
   res.sendFile(pathToFile);
 });
 
@@ -51,7 +51,7 @@ router.post('/upload', upload.single('ufile'), async (req,res) => {
         status: true,
         message: 'File is uploaded',
         filepath: path.join(req.file.path),
-        file:  `/uploads/${req.file.originalname}`
+        filename:  `/uploads/${req.file.originalname}`
       });
       // create filemodel from form
 /*      var fileToAdd = new fileModel({
@@ -68,7 +68,9 @@ router.post('/upload', upload.single('ufile'), async (req,res) => {
       const description = req.body.description;
       const today = new Date();
       const date = today.toLocaleDateString('en-US');
-      const fileToAdd = new fileModel(file, type, fileName, owner, description, date);
+      const pathToFile = file.path;
+
+      const fileToAdd = new fileModel(file, type, fileName, owner, description, date, pathToFile);
       addedFiles.push(fileToAdd);
     }
   } catch (err) {

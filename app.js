@@ -4,7 +4,6 @@ const path = require('path');
 
 const app = express();
 
-const indexRoute = require('./routes/index');
 const fileRoute = require('./routes/files');
 
 // configure express to use public folder
@@ -20,7 +19,6 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 // import routes
-app.use('/', indexRoute);
 app.use('/files', fileRoute);
 
 app.listen(3030, () => {
