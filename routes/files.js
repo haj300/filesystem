@@ -37,10 +37,13 @@ router.get('/uploads/:id', (req, res) => {
 // upload new file locally
 router.post('/upload', upload.single('ufile'), async (req,res) => {
   try {
+    // assign uploaded multer file
     const file = req.file;
 
+    // check if file exists
     if(!file) {
-      res.status(400).send({
+      res.status(400)
+      .send({
         status: false,
         data: 'No file is selected'
       });
@@ -49,19 +52,9 @@ router.post('/upload', upload.single('ufile'), async (req,res) => {
       res.status(200)
       .render('index',{
         status: true,
-        message: 'File is uploaded',
         filepath: path.join(req.file.path),
-        filename:  `/uploads/${req.file.originalname}`
       });
       // create filemodel from form
-/*      var fileToAdd = new fileModel({
-        fileName = req.file.origlinalname,
-        type = file.mimetype,
-        owner = req.body.name,
-        description = req.body.description,
-        today = new Date(),
-        date = today.toLocaleDateString('en-US')
-      });  */
       const fileName = file.origlinalname;
       const type = file.mimetype;
       const owner = req.body.name;
